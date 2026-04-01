@@ -22,8 +22,6 @@ const Bot = new Discord.Client({intents: [
 });
 
 
-console.log(process.env.key)
-
 // SETUP \\
 
 app.get(`/`, async (r, response) => { // Sends message
