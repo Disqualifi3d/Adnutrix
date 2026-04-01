@@ -9,8 +9,6 @@ module.exports.run = async (interaction, client, args) => {
 
     let Identification = args.username || toString(args.id)
 
-    console.log(args)
-
     if (!Identification) {
         interaction.reply("Please provide a username or ID to fetch information about.")
         return
@@ -45,8 +43,6 @@ module.exports.run = async (interaction, client, args) => {
 
     let profile = await noblox.getPlayerInfo(id)
             .catch((err) => {interaction.reply(`Promise rejected. Couldn't fetch ${Identification}'s information due to an error (${err})`); return})
-
-    console.log(profile)
     
     if (!profile) return
     let thumbnail = await noblox.getPlayerThumbnail(id, 720, "png", false, "Body")
@@ -68,7 +64,6 @@ module.exports.run = async (interaction, client, args) => {
         }
         
         for (let i = 1; i < Math.floor(amount); i++){
-            console.log(groups[i])
             if (groups[i] && groups[i].Name) {
                 gs = gs + `, (**${groups[i].Name}**)`
             }
@@ -78,7 +73,6 @@ module.exports.run = async (interaction, client, args) => {
             (groups.length - amount > 0) && `and [${groups.length - amount}] more...`
         ) || ""
 
-        console.log(thumbnail)
         if (thumbnail && thumbnail[0] && thumbnail[0].imageUrl) {
             embed.setThumbnail(thumbnail[0].imageUrl)
         }

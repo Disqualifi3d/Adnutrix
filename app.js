@@ -95,12 +95,9 @@ let readCommandFiles = async () => {
 
 let getFile = async (name) => {
 
-    console.log(name)
 
     let index = commandList.findIndex(cmd => cmd.name === name);
-    console.log(index)
-    if (index == -1) return console.log("something happened");
-    console.log("Found")
+    if (index == -1) return print("something happened");
         
     return commandList[index].file
 }
@@ -147,7 +144,6 @@ Bot.on("interactionCreate", async interaction => {
 Bot.on("messageCreate", async message => {
     if (message.author.bot) return;
 
-    print("Message Received: " + message.content)
     const args = message.content.slice(prefix.length).trim().split(/ +/g);
     const command = args.shift().toLowerCase();
 
