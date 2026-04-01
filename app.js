@@ -1,3 +1,5 @@
+require("dotenv").config()
+
 const noblox = require("noblox.js")
 const express = require("express")
 const REST = require("@discordjs/rest")
@@ -18,6 +20,9 @@ const Bot = new Discord.Client({intents: [
         Discord.GatewayIntentBits.MessageContent
     ],
 });
+
+
+console.log(process.env.key)
 
 // SETUP \\
 
