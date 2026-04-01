@@ -1,4 +1,4 @@
-const AdnutrixUtils = require("./AdUtilities.js")
+const AdnutrixUtils = require("./Settings.js")
 const { REST, Routes, ApplicationCommandOptionType } = require("discord.js")
 
 require("dotenv").config()

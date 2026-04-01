@@ -1,5 +1,5 @@
 require("dotenv").config()
-const AdnutrixUtils = require("./AdUtilities.js")
+const AdnutrixUtils = require("./Settings.js")
 const { REST, Routes } = require('discord.js');
 const rest = new REST().setToken(process.env.discord_token);
 // ...

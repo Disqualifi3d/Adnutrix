@@ -4,7 +4,7 @@ const noblox = require("noblox.js")
 const fs = require("fs").promises
 const express = require("express")
 const REST = require("@discordjs/rest")
-const AdnutrixUtils = require("./AdUtilities.js")
+const AdnutrixUtils = require("./Utilities/Settings.js")
 const {Client, SlashCommandBuilder, GatewayIntentBits, } = require("discord.js")
 const { joinVoiceChannel } = require("@discordjs/voice")
 const { connect } = require("http2")
@@ -107,7 +107,7 @@ Bot.on("clientReady", async () => {
     //let channel = Bot.fetchThisChannel(importantChannels.general)
     //channel.send("Online")
 
-    require("./CommandRegistration.js")
+    require("./Utilities/CommandRegistration.js")
 
     Bot.request = "No Request"
 })

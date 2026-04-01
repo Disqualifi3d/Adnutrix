@@ -1,5 +1,5 @@
 const noblox = require("noblox.js");
-const Utils = require("../AdUtilities.js");
+const Utils = require("../Utilities/Settings.js");
 const { Embed, EmbedBuilder } = require("discord.js");
 
 require('dotenv').config();
