@@ -130,12 +130,16 @@ Bot.on("interactionCreate", async interaction => {
     if (interaction.commandName === "info") {
         let file = await getFile(interaction.commandName)
 
-        let args = [
-            interaction.options.getString("user"),
-            interaction.options.getNumber("robloxid"),
-        ]
+        let args = {
+            username: interaction.options.getString("username"),
+            id: interaction.options.getNumber("id")
+        }
 
-        file.run(interaction, Bot, args)
+        file.run(interaction, Bot, args).catch((err) => {
+            interaction.reply(`An error occurred while running this command contact disqualifi3d to fix this issue. Error: ${err}`)
+           
+        })
+        
     }
 })
 

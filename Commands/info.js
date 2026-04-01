@@ -6,33 +6,45 @@ require('dotenv').config();
 
 
 module.exports.run = async (interaction, client, args) => {
-    let name = args[0]
-    
-    let bypass = true
 
-    let id = await noblox.getIdFromUsername(name)
-        .catch(
+    let Identification = args.username || toString(args.id)
+
+    console.log(args)
+
+    if (!Identification) {
+        interaction.reply("Please provide a username or ID to fetch information about.")
+        return
+    }
+
+    let id = null
+    
+
+    if (args.username) {
+        id = await noblox.getIdFromUsername([args.username5]).catch(
             async () => {
                 interaction.reply("Couldn't fetch userID from name, retrying with ID...");
-                
-                let profile = await noblox.getPlayerInfo(name)
-
-                if (!profile) {
-                    interaction.reply(`Couldn't fetch userID from name or ID. Please make sure you provided a valid username or ID.`)
-                    id = null
-                    return
-                }
-
-                id = name
-
                 return
             }
         )
+    }
 
-    if (!id) return
+    if (args.id && !args.username) {
+        await noblox.getPlayerInfo(args.id).catch(
+            async () => {
+                interaction.reply("Couldn't fetch userID from ID, retrying with username...");
+                return
+            }
+        )
+    }
+
+    if (!id && args.id) {
+        id = args.id
+    }
+
+    if (!id) return console.log("Couldn't fetch anything from the provided information");
 
     let profile = await noblox.getPlayerInfo(id)
-            .catch((err) => {interaction.reply(`Promise rejected. Couldn't fetch ${name}'s information due to an error (${err})`); return})
+            .catch((err) => {interaction.reply(`Promise rejected. Couldn't fetch ${Identification}'s information due to an error (${err})`); return})
 
     console.log(profile)
     

@@ -10,15 +10,15 @@ const commands = [
     },
     {
         name: "info",
-        description: "Get info about the player",
+        description: "Get info about the player (choose one option only)",
         options : [
             {
-                name: "user",
-                description: "The user you want to get info about",
+                name: "username",
+                description: "The Roblox username you want to get info about",
                 type: ApplicationCommandOptionType.String,
             },
             {
-                name: "robloxid",
+                name: "id",
                 description: "The Roblox ID of the player you want to get info about",
                 type: ApplicationCommandOptionType.Number
             }
