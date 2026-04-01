@@ -5,7 +5,9 @@ const fs = require("fs").promises
 const express = require("express")
 const REST = require("@discordjs/rest")
 const AdnutrixUtils = require("./AdUtilities.js")
-const {Client, SlashCommandBuilder, GatewayIntentBits, Utils} = require("discord.js")
+const {Client, SlashCommandBuilder, GatewayIntentBits, } = require("discord.js")
+const { joinVoiceChannel } = require("@discordjs/voice")
+const { connect } = require("http2")
 
 const token = process.env.discord_token
 const prefix = ";"
@@ -42,20 +44,6 @@ let listener = app.listen(process.env.PORT, () => {
 let testing = AdnutrixUtils.testing
 let server = AdnutrixUtils.guild
 let importantChannels = AdnutrixUtils.channels
-
-Bot.formatTime = async (time) => {
-    let hours = Math.floor(time / (60 * 60))
-    let minutes = Math.floor(time / 60) % 60
-    let seconds = Math.floor(time) % 60
-
-    if (hours > 0) {
-        hours = `${hours}h`
-    } else if (hours <= 0) {
-        hours = ""
-    }
-
-    return (`${hours} ${minutes}m ${seconds}s`)
-}
 
 Bot.Common_Embed = async (author, title, description) => {
     let embed = new Discord.EmbedBuilder()
@@ -106,10 +94,18 @@ let getFile = async (name) => {
 
 Bot.on("clientReady", async () => {
 
+    const Connection = joinVoiceChannel({
+        channelId: AdnutrixUtils.vcChannel,
+        guildId: AdnutrixUtils.guild,
+        adapterCreator: Bot.guilds.cache.get(AdnutrixUtils.guild).voiceAdapterCreator,
+        selfDeaf: false,
+        selfMute: false
+    })
+
     await readCommandFiles()
 
-    let channel = Bot.fetchThisChannel(importantChannels.general)
-    channel.send("Online")
+    //let channel = Bot.fetchThisChannel(importantChannels.general)
+    //channel.send("Online")
 
     require("./CommandRegistration.js")
 
@@ -134,9 +130,10 @@ Bot.on("interactionCreate", async interaction => {
 
         file.run(interaction, Bot, args).catch((err) => {
             interaction.reply(`An error occurred while running this command contact disqualifi3d to fix this issue. Error: ${err}`)
-           
         })
         
+        interaction.channel
+
     }
 })
 
@@ -155,10 +152,11 @@ Bot.on("messageCreate", async message => {
 // EXTRA CUSTOM BOT FUNCTIONS \\
 
 Bot.fetchThisChannel = (C) => {
-    let sv = Bot.guilds.cache.get(server)
+    let sv = Bot.guilds.cache.get(AdnutrixUtils.guild)
     let channel = (sv && sv.channels.cache.get(C)) || null
     if (channel) return channel
 }
+
 Bot.login(token)
 
 // MAIN \\

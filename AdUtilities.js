@@ -1,9 +1,27 @@
 const Utils = {
     testing: true,
 
-    guilds: "",
+    formatTime: async (time) => {
+        let hours = Math.floor(time / (60 * 60))
+        let minutes = Math.floor(time / 60) % 60
+        let seconds = Math.floor(time) % 60
+
+        if (hours > 0) {
+            hours = `${hours}h`
+        } else if (hours <= 0) {
+            hours = ""
+        }
+
+        return (`${hours} ${minutes}m ${seconds}s`)
+    },
+
+    guild: "",
     channels: {},
+
+    vcChannel: ""
 }
+
+Utils.vcChannel = Utils.testing && "399221963089772549" || "802333970943311953"
 
 Utils.guild = Utils.testing && "399221963089772545" || "584891032202772517"
 
