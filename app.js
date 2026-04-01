@@ -5,7 +5,6 @@ const express = require("express")
 const REST = require("@discordjs/rest")
 const Discord = require("discord.js")
 
-const token = "ODU1MjYxNjgzMDUyNDQ1Nzc3.GvqjNT.spq1LKsXqYjLPAB_2hQQFOB0KPVyEjh3hCHrWI"
 const prefix = ";"
 
 const app = express()
@@ -116,7 +115,7 @@ Bot.fetchThisChannel = (C) => {
     let channel = (sv && sv.channels.cache.get(C)) || null
     if (channel) return channel
 }
-Bot.login(token)
+Bot.login(process.env.discord_token)
 
 // MAIN \\
 
