@@ -1,9 +1,11 @@
 require("dotenv").config()
 
 const noblox = require("noblox.js")
+const fs = require("fs").promises
 const express = require("express")
 const REST = require("@discordjs/rest")
-const Discord = require("discord.js")
+const AdnutrixUtils = require("./AdUtilities.js")
+const {Client, SlashCommandBuilder, GatewayIntentBits, Utils} = require("discord.js")
 
 const token = process.env.discord_token
 const prefix = ";"
@@ -14,34 +16,32 @@ const commandList = []
 
 const rest = new REST.REST({version: "10"}).setToken(token)
 
-const Bot = new Discord.Client({intents: [
-        Discord.GatewayIntentBits.Guilds,
-        Discord.GatewayIntentBits.GuildMessages,
-        Discord.GatewayIntentBits.MessageContent
+const Bot = new Client({intents: [
+        GatewayIntentBits.Guilds,
+        GatewayIntentBits.GuildMessages,
+        GatewayIntentBits.MessageContent,
     ],
 });
 
 
 // SETUP \\
 
+print = (Data) => {
+    console.log(Data)
+}
+
+
 app.get(`/`, async (r, response) => { // Sends message
     response.status(200).send(Bot.request);
 });
 
 let listener = app.listen(process.env.PORT, () => {
-    console.log(`Your app is currently listening on port: ${listener.address().port}`);
+    print(`Your app is currently listening on port: ${listener.address().port}`);
 });
 
-let testing = true
-
-let server = (testing === true && "399221963089772545") || "584891032202772517"
-
-let importantChannels = {
-    office: (testing === true && "1361665283340898315") || "620439117431570433",
-    modlogs: (testing === true && "1361665283340898315") || "713541389811712001",
-    ranks: (testing === true && "1361665283340898315") || "731611756283035751",
-    general: (testing === true && "1361665283340898315") || "802324327521452093"
-}
+let testing = AdnutrixUtils.testing
+let server = AdnutrixUtils.guild
+let importantChannels = AdnutrixUtils.channels
 
 Bot.formatTime = async (time) => {
     let hours = Math.floor(time / (60 * 60))
@@ -92,16 +92,61 @@ let readCommandFiles = async () => {
     }
 }
 
+
+let getFile = async (name) => {
+
+    console.log(name)
+
+    let index = commandList.findIndex(cmd => cmd.name === name);
+    console.log(index)
+    if (index == -1) return console.log("something happened");
+    console.log("Found")
+        
+    return commandList[index].file
+}
+
 // CONNECTIONS \\
 
-Bot.on("ready", async () => {
+Bot.on("clientReady", async () => {
+
+    await readCommandFiles()
+
     let channel = Bot.fetchThisChannel(importantChannels.general)
-    channel.send("test")
+    channel.send("Online")
+
+    require("./CommandRegistration.js")
 
     Bot.request = "No Request"
 })
 
+
+Bot.on("interactionCreate", async interaction => {
+    if (!interaction.isChatInputCommand()) return;
+
+    if (interaction.commandName === "adnutrixtest") {
+        interaction.reply("hi")
+    }
+
+    if (interaction.commandName === "info") {
+        let file = await getFile(interaction.commandName)
+
+        let args = [
+            interaction.options.getString("user"),
+            interaction.options.getNumber("robloxid"),
+        ]
+
+        file.run(interaction, Bot, args)
+    }
+})
+
+
 Bot.on("messageCreate", async message => {
+    if (message.author.bot) return;
+
+    print("Message Received: " + message.content)
+    const args = message.content.slice(prefix.length).trim().split(/ +/g);
+    const command = args.shift().toLowerCase();
+
 
 })
 
