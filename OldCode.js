@@ -1,10 +1,11 @@
 console.log("------------------------------------------------------------------------------------------------------------------------------------------------")
 
+require("dotenv").config()
 const express = require('express');
 const Discord = require('discord.js');
 
 const REST = require("@discordjs/rest")
-const token = "ODU1MjYxNjgzMDUyNDQ1Nzc3.GvqjNT.spq1LKsXqYjLPAB_2hQQFOB0KPVyEjh3hCHrWI";
+const token = process.env.discord_token;
 const prefix = ";";
 const fs = require('then-fs');
 const Trello = require("trello");
