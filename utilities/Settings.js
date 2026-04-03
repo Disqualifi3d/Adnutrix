@@ -21,7 +21,8 @@ const Settings = {
     vcChannel: ""
 }
 
-Settings.universeid = Settings.testing && "2297033956" || "2640653293"
+Settings.mainplaceuniverseid = Settings.testing && "2297033956" || "2640653293"
+Settings.testplaceuniverseid = Settings.testing && "2297033956" || "3464172496"
 
 Settings.vcChannel = Settings.testing && "399221963089772549" || "802333970943311953"
 

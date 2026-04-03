@@ -34,12 +34,10 @@ module.exports.run = async (interaction, client, args) => {
     let identifier = profile.username
     let reason = args.reason
 
-    let universeid = adnutrixsettings.universeid
     let api_key = process.env.adnutrix_api_key
-    let url = `https://apis.roblox.com/messaging-service/v1/universes/${universeid}/topics/Kicking`
 
     await axios.post(
-        url,
+        `https://apis.roblox.com/messaging-service/v1/universes/${adnutrixsettings.mainplaceuniverseid}/topics/Kicking`,
         {
             message: JSON.stringify({
                 Identifier: identifier,
@@ -53,6 +51,24 @@ module.exports.run = async (interaction, client, args) => {
             }
         }
     )
+
+    if (adnutrixsettings.testing === false) {
+    await axios.post(
+        `https://apis.roblox.com/messaging-service/v1/universes/${adnutrixsettings.testplaceuniverseid}/topics/Kicking`,
+        {
+            message: JSON.stringify({
+                Identifier: identifier,
+                Reason: reason
+            })
+        },
+        {
+            headers: {
+                "x-api-key": api_key,
+                "Content-Type": "application/json"
+            }
+        }
+    )
+}
 
     interaction.reply(`<@${interaction.member.id}> initiated a kick request for **${identifier}** \n\n reason: ${reason}`)
 }
