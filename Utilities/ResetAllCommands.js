@@ -1,5 +1,5 @@
 require("dotenv").config()
-const AdnutrixUtils = require("./Settings.js")
+const adnutrixsettings = require("./Settings.js")
 const { REST, Routes } = require('discord.js');
 const rest = new REST().setToken(process.env.discord_token);
 // ...
@@ -8,7 +8,7 @@ const rest = new REST().setToken(process.env.discord_token);
 
 
 rest
-	.put(Routes.applicationGuildCommands(process.env.client_id, AdnutrixUtils.guild), { body: [] })
+	.put(Routes.applicationGuildCommands(process.env.client_id, adnutrixsettings.guild), { body: [] })
 	.then(() => console.log('Successfully deleted all guild commands.'))
 	.catch(console.error);
 // for global commands

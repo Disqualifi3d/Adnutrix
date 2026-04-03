@@ -4,7 +4,7 @@ const noblox = require("noblox.js")
 const fs = require("fs").promises
 const express = require("express")
 const REST = require("@discordjs/rest")
-const AdnutrixUtils = require("./Utilities/Settings.js")
+const adnutrixsettings = require("./utilities/Settings.js")
 const {Client, SlashCommandBuilder, GatewayIntentBits, } = require("discord.js")
 const { joinVoiceChannel } = require("@discordjs/voice")
 const { connect } = require("http2")
@@ -33,17 +33,17 @@ print = (Data) => {
 }
 
 
-app.get(`/`, async (r, response) => { // Sends message
+app.get(`/get`, async (r, response) => { // Sends message
     response.status(200).send(Bot.request);
 });
 
-let listener = app.listen(process.env.PORT, () => {
+let listener = app.listen(process.env.port, () => {
     print(`Your app is currently listening on port: ${listener.address().port}`);
 });
 
-let testing = AdnutrixUtils.testing
-let server = AdnutrixUtils.guild
-let importantChannels = AdnutrixUtils.channels
+let testing = adnutrixsettings.testing
+let server = adnutrixsettings.guild
+let importantChannels = adnutrixsettings.channels
 
 Bot.Common_Embed = async (author, title, description) => {
     let embed = new Discord.EmbedBuilder()
@@ -95,9 +95,9 @@ let getFile = async (name) => {
 Bot.on("clientReady", async () => {
 
     const Connection = joinVoiceChannel({
-        channelId: AdnutrixUtils.vcChannel,
-        guildId: AdnutrixUtils.guild,
-        adapterCreator: Bot.guilds.cache.get(AdnutrixUtils.guild).voiceAdapterCreator,
+        channelId: adnutrixsettings.vcChannel,
+        guildId: adnutrixsettings.guild,
+        adapterCreator: Bot.guilds.cache.get(adnutrixsettings.guild).voiceAdapterCreator,
         selfDeaf: false,
         selfMute: false
     })
@@ -107,7 +107,7 @@ Bot.on("clientReady", async () => {
     //let channel = Bot.fetchThisChannel(importantChannels.general)
     //channel.send("Online")
 
-    require("./Utilities/CommandRegistration.js")
+    require("./utilities/CommandRegistration.js")
 
     Bot.request = "No Request"
 })
@@ -131,10 +131,33 @@ Bot.on("interactionCreate", async interaction => {
         file.run(interaction, Bot, args).catch((err) => {
             interaction.reply(`An error occurred while running this command contact disqualifi3d to fix this issue. Error: ${err}`)
         })
-        
-        interaction.channel
 
     }
+
+    if (interaction.commandName == "kick") {
+        let file = await getFile(interaction.commandName)
+        let args = {
+            reason: interaction.options.getString("reason"),
+            username: interaction.options.getString("username"),
+            id: interaction.options.getNumber("id")
+        }
+        file.run(interaction, Bot, args).catch((err) => {
+            interaction.reply(`An error occurred while running this command contact disqualifi3d to fix this issue. Error: ${err}`)
+        })
+    }
+
+    if (interaction.commandName === "sendmessage") {
+        let file = await getFile(interaction.commandName)
+        let args = {
+            message: interaction.options.getString("message")
+        }
+        file.run(interaction, Bot, args).catch((err) => {
+            interaction.reply(`An error occurred while running this command contact disqualifi3d to fix this issue. Error: ${err}`)
+        })
+    }
+
+    
+
 })
 
 
@@ -152,7 +175,7 @@ Bot.on("messageCreate", async message => {
 // EXTRA CUSTOM BOT FUNCTIONS \\
 
 Bot.fetchThisChannel = (C) => {
-    let sv = Bot.guilds.cache.get(AdnutrixUtils.guild)
+    let sv = Bot.guilds.cache.get(adnutrixsettings.guild)
     let channel = (sv && sv.channels.cache.get(C)) || null
     if (channel) return channel
 }
@@ -161,10 +184,11 @@ Bot.login(token)
 
 // MAIN \\
 
-app.post(`/`, async (request, response) => {
-    let commandRequest = Bot.request;
-    let status = request.headers.success
-    let x = false
+app.post(`/verify-request`, async (request, response) => {
+    let headers = request.headers
+    let status  = headers.status
+    
+    
 
     return response.sendStatus(200);
 });

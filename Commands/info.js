@@ -1,5 +1,6 @@
 const noblox = require("noblox.js");
-const Utils = require("../Utilities/Settings.js");
+const adnutrixsettings = require("../utilities/Settings.js");
+const profilefetcher = require("../utilities/FetchRobloxProfile.js")
 const { Embed, EmbedBuilder } = require("discord.js");
 
 require('dotenv').config();
@@ -14,36 +15,19 @@ module.exports.run = async (interaction, client, args) => {
         return
     }
 
-    let id = null
-    
+    let id = await profilefetcher.fetch(args)
 
-    if (args.username) {
-        id = await noblox.getIdFromUsername([args.username5]).catch(
-            async () => {
-                interaction.reply("Couldn't fetch userID from name, retrying with ID...");
-                return
-            }
-        )
+    if (!id) {
+        interaction.reply("Couldn't fetch anything from the provided information");
+        return
     }
-
-    if (args.id && !args.username) {
-        await noblox.getPlayerInfo(args.id).catch(
-            async () => {
-                interaction.reply("Couldn't fetch userID from ID, retrying with username...");
-                return
-            }
-        )
-    }
-
-    if (!id && args.id) {
-        id = args.id
-    }
-
-    if (!id) return console.log("Couldn't fetch anything from the provided information");
+        
 
     let profile = await noblox.getPlayerInfo(id)
             .catch((err) => {interaction.reply(`Promise rejected. Couldn't fetch ${Identification}'s information due to an error (${err})`); return})
+
     
+
     if (!profile) return
     let thumbnail = await noblox.getPlayerThumbnail(id, 720, "png", false, "Body")
 

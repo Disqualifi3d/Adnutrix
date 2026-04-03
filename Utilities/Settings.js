@@ -1,4 +1,4 @@
-const Utils = {
+const Settings = {
     testing: true,
 
     formatTime: async (time) => {
@@ -21,13 +21,15 @@ const Utils = {
     vcChannel: ""
 }
 
-Utils.vcChannel = Utils.testing && "399221963089772549" || "802333970943311953"
+Settings.universeid = Settings.testing && 2297033956 || 2640653293
 
-Utils.guild = Utils.testing && "399221963089772545" || "584891032202772517"
+Settings.vcChannel = Settings.testing && "399221963089772549" || "802333970943311953"
 
-Utils.channels.office = Utils.testing && "1361665283340898315" || "620439117431570433"
-Utils.channels.modlogs = Utils.testing && "1361665283340898315" || "713541389811712001"
-Utils.channels.ranks = Utils.testing && "1361665283340898315" || "731611756283035751"
-Utils.channels.general = Utils.testing && "1361665283340898315" || "802324327521452093"
+Settings.guild = Settings.testing && "399221963089772545" || "584891032202772517"
 
-module.exports = Utils
+Settings.channels.office = Settings.testing && "1361665283340898315" || "620439117431570433"
+Settings.channels.modlogs = Settings.testing && "1361665283340898315" || "713541389811712001"
+Settings.channels.ranks = Settings.testing && "1361665283340898315" || "731611756283035751"
+Settings.channels.general = Settings.testing && "1361665283340898315" || "802324327521452093"
+
+module.exports = Settings
