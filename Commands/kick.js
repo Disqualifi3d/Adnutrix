@@ -1,5 +1,4 @@
 const { default: axios } = require("axios");
-const { json } = require("express");
 const noblox = require("noblox.js")
 const profilefetcher = require("../utilities/FetchRobloxProfile.js")
 const adnutrixsettings = require("../utilities/Settings.js")
@@ -35,7 +34,7 @@ module.exports.run = async (interaction, client, args) => {
     let identifier = profile.username
     let reason = args.reason
 
-    let universeid = (adnutrixsettings.testing && 2297033956) || 2640653293
+    let universeid = adnutrixsettings.universeid
     let api_key = process.env.adnutrix_api_key
     let url = `https://apis.roblox.com/messaging-service/v1/universes/${universeid}/topics/Kicking`
 
