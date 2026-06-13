@@ -1,5 +1,5 @@
 const Settings = {
-    testing: true,
+    testing: false,
 
     formatTime: async (time) => {
         time = Number(time)

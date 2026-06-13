@@ -61,7 +61,7 @@ const commands = [
             },
             {
                 name: "privatereason",
-                description: "The full reason for the ban (only visible to staff)",
+                description: "The full reason for the ban (will be visible in the modlogs channel)",
                 type: ApplicationCommandOptionType.String,
                 required: true
             },
