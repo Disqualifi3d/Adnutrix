@@ -21,7 +21,7 @@ module.exports.run = async (interaction, client, args) => {
 
     let profile = await noblox.getPlayerInfo(id).catch(
         (err) => {
-            interaction.reply(`Promise rejected. Couldn't fetch ${Identification}'s information due to an error (${err})`); 
+            interaction.reply(`Promise rejected. Couldn't fetch ${id}'s information due to an error (${err})`); 
             return
         }
     )
@@ -41,7 +41,8 @@ module.exports.run = async (interaction, client, args) => {
         {
             message: JSON.stringify({
                 Identifier: identifier,
-                Reason: reason
+                Reason: reason,
+                Ban: false
             })
         },
         {
@@ -53,21 +54,22 @@ module.exports.run = async (interaction, client, args) => {
     )
 
     if (adnutrixsettings.testing === false) {
-    await axios.post(
-        `https://apis.roblox.com/messaging-service/v1/universes/${adnutrixsettings.testplaceuniverseid}/topics/Kicking`,
-        {
-            message: JSON.stringify({
-                Identifier: identifier,
-                Reason: reason
-            })
-        },
-        {
-            headers: {
-                "x-api-key": api_key,
-                "Content-Type": "application/json"
+        await axios.post(
+            `https://apis.roblox.com/messaging-service/v1/universes/${adnutrixsettings.testplaceuniverseid}/topics/Kicking`,
+            {
+                message: JSON.stringify({
+                    Identifier: identifier,
+                    Reason: reason,
+                    Ban: false
+                })
+            },
+            {
+                headers: {
+                    "x-api-key": api_key,
+                    "Content-Type": "application/json"
+                }
             }
-        }
-    )
+        )
 }
 
     interaction.reply(`<@${interaction.member.id}> initiated a kick request for **${identifier}** \n\n reason: ${reason}`)

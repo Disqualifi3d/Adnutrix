@@ -50,6 +50,56 @@ const commands = [
         ]
     },
     {
+        name: "ban",
+        description: "Ban a user from the game (choose one external option)",
+        options: [
+            {
+                name: "displayreason",
+                description: "What shows up to the user when they try to join the game",
+                type: ApplicationCommandOptionType.String,
+                required: true
+            },
+            {
+                name: "privatereason",
+                description: "The full reason for the ban (only visible to staff)",
+                type: ApplicationCommandOptionType.String,
+                required: true
+            },
+            {
+                name: "duration",
+                description: "The duration of the ban in seconds (-1 for permanent)",
+                type: ApplicationCommandOptionType.Number,
+                required: true
+            },
+            {
+                name: "game",
+                description: "The game you want to ban the user from",
+                type: ApplicationCommandOptionType.String,
+                choices: [
+                    {
+                        name: "Main Game",
+                        value: "Main",
+                    },
+                    {
+                        name: "Test Game",
+                        value: "Test",
+                    }
+                ],
+                required: true
+            },
+            {
+                name: "username",
+                description: "The Roblox username of the user you want to ban",
+                type: ApplicationCommandOptionType.String,
+            },
+            {
+                name: "id",
+                description: "The Roblox ID of the player you want to ban",
+                type: ApplicationCommandOptionType.Number
+            },
+        ]
+    },
+    {
         name: "sendmessage",
         description: "Sends a message to every active server",
         options: [

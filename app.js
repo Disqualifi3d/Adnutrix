@@ -131,7 +131,7 @@ Bot.on("interactionCreate", async interaction => {
         }
 
         file.run(interaction, Bot, args).catch((err) => {
-            interaction.reply(`An error occurred while running this command contact disqualifi3d to fix this issue. Error: ${err}`)
+            interaction.reply(`An error occurred while running this command contact disqualifi3d to fix this issue. ${err}`)
         })
 
     }
@@ -144,7 +144,25 @@ Bot.on("interactionCreate", async interaction => {
             id: interaction.options.getNumber("id")
         }
         file.run(interaction, Bot, args).catch((err) => {
-            interaction.reply(`An error occurred while running this command contact disqualifi3d to fix this issue. Error: ${err}`)
+            interaction.reply(`An error occurred while running this command contact disqualifi3d to fix this issue. ${err}`)
+        })
+    }
+
+    if (interaction.commandName == "ban") {
+        let file = await getFile(interaction.commandName)
+        let args = {
+            reasons: {
+                display: interaction.options.getString("displayreason"),
+                private: interaction.options.getString("privatereason")
+            },
+            duration: interaction.options.getNumber("duration"),
+            game: interaction.options.getString("game"),
+            username: interaction.options.getString("username"),
+            id: interaction.options.getNumber("id")
+        }
+
+        file.run(interaction, Bot, args).catch((err) => {
+            interaction.reply(`An error occurred while running this command contact disqualifi3d to fix this issue. ${err}`)
         })
     }
 
@@ -154,11 +172,9 @@ Bot.on("interactionCreate", async interaction => {
             message: interaction.options.getString("message")
         }
         file.run(interaction, Bot, args).catch((err) => {
-            interaction.reply(`An error occurred while running this command contact disqualifi3d to fix this issue. Error: ${err}`)
+            interaction.reply(`An error occurred while running this command contact disqualifi3d to fix this issue. ${err}`)
         })
     }
-
-    
 
 })
 
@@ -275,9 +291,9 @@ ${Players}
             embed.addFields({
                 name: `__${index}__`,
                 value: `
-        Time: ${bossTime}
-        Score: ${value.Score}
-        BYF: ${value.BYF}
+Time: ${bossTime}
+Score: ${value.Score}
+BYF: ${value.BYF}
                     `,
                 inline: true
             })

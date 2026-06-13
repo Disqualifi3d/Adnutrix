@@ -1,10 +1,19 @@
 const Settings = {
-    testing: false,
+    testing: true,
 
     formatTime: async (time) => {
-        let hours = Math.floor(time / (60 * 60))
+        time = Number(time)
+
+        let days = Math.floor(time / (24 * 60 * 60))
+        let hours = Math.floor(time / (60 * 60)) % 24
         let minutes = Math.floor(time / 60) % 60
         let seconds = Math.floor(time) % 60
+
+        if (days > 0) {
+            days = `${days}d`
+        } else if (days <= 0) {
+            days = ""
+        }
 
         if (hours > 0) {
             hours = `${hours}h`
@@ -12,7 +21,7 @@ const Settings = {
             hours = ""
         }
 
-        return (`${hours} ${minutes}m ${seconds}s`)
+        return (`${days} ${hours} ${minutes}m ${seconds}s`)
     },
 
     guild: "",
