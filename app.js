@@ -2,6 +2,7 @@ require("dotenv").config()
 
 const noblox = require("noblox.js")
 const fs = require("fs").promises
+const path = require("path")
 const express = require("express")
 const REST = require("@discordjs/rest")
 const adnutrixsettings = require("./utilities/Settings.js")
@@ -235,7 +236,7 @@ app.post(`/verify-request`, async (request, response) => {
 
         if (!channel) return print("Couldn't find the channel to send the test message in.");
 
-        channel.send("endpoint is working")
+        await channel.send("endpoint is working")
 
     }
 
@@ -283,12 +284,12 @@ app.post(`/verify-request`, async (request, response) => {
 
         embed.setColor(Rank.color)
         if (Rank.icon) {
-            files.push(new AttachmentBuilder(Rank.icon, { name: "rank.png" }));
+            files.push(new AttachmentBuilder(path.resolve(__dirname, Rank.icon), { name: "rank.png" }));
             embed.setThumbnail("attachment://rank.png");
         }
         
         if (mode_Icon) {
-            files.push(new AttachmentBuilder(mode_Icon, { name: "mode.png" }));
+            files.push(new AttachmentBuilder(path.resolve(__dirname, mode_Icon), { name: "mode.png" }));
             embed.setImage("attachment://mode.png");
         }
 
@@ -336,7 +337,7 @@ BYF: ${value.BYF}
             }
         }
         */
-        channel.send(
+        await channel.send(
             {
                 embeds: [embed],
                 files: files.length > 0 && files || [] 

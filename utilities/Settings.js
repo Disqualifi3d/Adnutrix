@@ -39,16 +39,16 @@ const Settings = {
 
 
     rankimages: {
-            F: { Min: -100, Max: 50, color: [1, 1, 1], icon:                                           "./images/modes/FRank.png" },
-            D: { Min: 50, Max: 60, color: [10, 99, 194], icon:                                         "./images/modes/DRank.png" },
-            C: { Min: 60, Max: 75, color: [10, 194, 108], icon:                                        "./images/modes/CRank.png" },
-            B: { Min: 75, Max: 90, color: [153, 161, 40], icon:                                        "./images/modes/BRank.png" },
-            A: { Min: 90, Max: 100, color: [173, 91, 24], icon:                                        "./images/modes/ARank.png" },
-            S: { Min: 100, Max: 200, color: [115, 53, 150], icon:                                      "./images/modes/SRank.png" },
-            SS: { Min: 200, Max: 250, color: [145, 63, 191], icon:                                     "./images/modes/SSRank.png" },
-            SSS: { Min: 250, Max: 300, color: [224, 29, 202], icon:                                    "./images/modes/SSSRank.png" },
-            Omega: { Min: 300, Max: 350, color: [225, 225, 225], icon:                                 "./images/modes/OmegaRank.png" },
-            OmegaPlus: { Min: 350, Max: 100000000000000000000, color: [225, 225, 225], icon:           "./images/modes/OmegaPlusRank.png" },
+            F: { Min: -100, Max: 50, color: [1, 1, 1], icon:                                           "./images/ranks/FRank.png" },
+            D: { Min: 50, Max: 60, color: [10, 99, 194], icon:                                         "./images/ranks/DRank.png" },
+            C: { Min: 60, Max: 75, color: [10, 194, 108], icon:                                        "./images/ranks/CRank.png" },
+            B: { Min: 75, Max: 90, color: [153, 161, 40], icon:                                        "./images/ranks/BRank.png" },
+            A: { Min: 90, Max: 100, color: [173, 91, 24], icon:                                        "./images/ranks/ARank.png" },
+            S: { Min: 100, Max: 200, color: [115, 53, 150], icon:                                      "./images/ranks/SRank.png" },
+            SS: { Min: 200, Max: 250, color: [145, 63, 191], icon:                                     "./images/ranks/SSRank.png" },
+            SSS: { Min: 250, Max: 300, color: [224, 29, 202], icon:                                    "./images/ranks/SSSRank.png" },
+            Omega: { Min: 300, Max: 350, color: [225, 225, 225], icon:                                 "./images/ranks/OmegaRank.png" },
+            OmegaPlus: { Min: 350, Max: 100000000000000000000, color: [225, 225, 225], icon:           "./images/ranks/OmegaPlusRank.png" },
     },
 
     modeimages: {
