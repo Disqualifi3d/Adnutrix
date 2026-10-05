@@ -100,6 +100,38 @@ const commands = [
         ]
     },
     {
+        name: "unban",
+        description: "Unban a user from the game (choose one external option)",
+        options: [
+            {
+                name: "game",
+                description: "The game you want to unban the user from",
+                type: ApplicationCommandOptionType.String,
+                choices: [
+                    {
+                        name: "Main Game",
+                        value: "Main",
+                    },
+                    {
+                        name: "Test Game",
+                        value: "Test",
+                    }
+                ],
+                required: true
+            },
+            {
+                name: "username",
+                description: "The Roblox username of the user you want to unban",
+                type: ApplicationCommandOptionType.String,
+            },
+            {
+                name: "id",
+                description: "The Roblox ID of the player you want to unban",
+                type: ApplicationCommandOptionType.Number
+            },
+        ]
+    },
+    {
         name: "sendmessage",
         description: "Sends a message to every active server",
         options: [

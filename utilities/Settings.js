@@ -24,6 +24,14 @@ const Settings = {
         return (`${days} ${hours} ${minutes}m ${seconds}s`)
     },
 
+    retrieveMessenger: async (interaction) => {
+        return (interaction.user.id === "203901768906571776" && "ANDROXIA")
+                || (interaction.user.id === "192509748807991297" && "VYNOX")
+                || (interaction.user.id === "267035562500685825" && "GLACIO")
+                || (interaction.user.id === "528593925615779850" && "OTYRNA")
+                || "ADNUTRIX"
+    },
+
     guild: "",
     channels: {},
 
@@ -40,7 +48,7 @@ const Settings = {
             SS: { Min: 200, Max: 250, color: [145, 63, 191], icon:                                     "./images/modes/meowl.png" },
             SSS: { Min: 250, Max: 300, color: [224, 29, 202], icon:                                    "./images/modes/meowl.png" },
             Omega: { Min: 300, Max: 100000000000000000000, color: [225, 225, 225], icon:               "./images/modes/meowl.png" },
-        },
+    },
 
     modeimages: {
             Casual: { name: "Casual", icon:                                                            "./images/modes/meowl.png" },
@@ -52,7 +60,7 @@ const Settings = {
             "DEMONHUNTERS MUST DIE": { name: "DEMONHUNTERS MUST DIE", icon:                            "./images/modes/meowl.png" },
             "Hyperstyle Glory": { name: "Hyperstyle Glory", icon:                                      "./images/modes/meowl.png" },
             Custom: { name: "Custom", icon:                                                            "./images/modes/meowl.png" },
-        },
+    },
 }
 
 Settings.mainplaceuniverseid = Settings.testing && "2297033956" || "2640653293"

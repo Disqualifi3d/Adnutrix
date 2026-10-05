@@ -42,6 +42,7 @@ module.exports.run = async (interaction, client, args) => {
             message: JSON.stringify({
                 Identifier: identifier,
                 Reason: reason,
+                Messenger: await adnutrixsettings.retrieveMessenger(interaction),
                 Ban: false
             })
         },
@@ -60,6 +61,7 @@ module.exports.run = async (interaction, client, args) => {
                 message: JSON.stringify({
                     Identifier: identifier,
                     Reason: reason,
+                    Messenger: await adnutrixsettings.retrieveMessenger(interaction),
                     Ban: false
                 })
             },

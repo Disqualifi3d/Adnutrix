@@ -5,6 +5,12 @@ const Settings = require("../utilities/Settings.js");
 
 require("dotenv").config();
 
+/**
+ * @param {import("discord.js").ChatInputCommandInteraction} interaction
+ * @param {import("discord.js").Client} client
+ * @param {{ message?: string }} args
+ */
+
 module.exports.run = async (interaction, client, args) => {
     let message = args.message
 
@@ -15,11 +21,15 @@ module.exports.run = async (interaction, client, args) => {
 
     let api_key = process.env.adnutrix_api_key
 
+    let messenger = await adnutrixsettings.retrieveMessenger(interaction)
+
+
     await axios.post(
         `https://apis.roblox.com/messaging-service/v1/universes/${adnutrixsettings.mainplaceuniverseid}/topics/Messaging`,
         {
             message: JSON.stringify({
                 Text: message,
+                Messenger: messenger,
             })
         },
         {
@@ -36,6 +46,7 @@ module.exports.run = async (interaction, client, args) => {
             {
                 message: JSON.stringify({
                     Text: message,
+                    Messenger: messenger,
                 })
             },
             {

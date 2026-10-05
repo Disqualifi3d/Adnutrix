@@ -124,6 +124,7 @@ module.exports.run = async (interaction, Bot, args) => {
                 message: JSON.stringify({
                     Identifier: identifier,
                     Reason: reasons.display,
+                    Messenger: await adnutrixsettings.retrieveMessenger(interaction),
                     Ban: true
                 })
             },

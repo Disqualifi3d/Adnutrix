@@ -166,6 +166,25 @@ Bot.on("interactionCreate", async interaction => {
         })
     }
 
+    if (interaction.commandName === "unban") {
+        let file = await getFile(interaction.commandName)
+        let args = {
+            game: interaction.options.getString("game"),
+            username: interaction.options.getString("username"),
+            id: interaction.options.getNumber("id")
+        }
+
+        file.run(interaction, Bot, args).catch(async (err) => {
+            let message = `An error occurred while running this command contact disqualifi3d to fix this issue. ${err.message}`
+
+            if (interaction.deferred || interaction.replied) {
+                await interaction.editReply(message)
+            } else {
+                await interaction.reply(message)
+            }
+        })
+    }
+
     if (interaction.commandName === "sendmessage") {
         let file = await getFile(interaction.commandName)
         let args = {
