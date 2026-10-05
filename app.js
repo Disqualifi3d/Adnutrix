@@ -252,6 +252,9 @@ app.post(`/verify-request`, async (request, response) => {
         let Rank = null
         let skill = body.Skill
 
+        let skill_raw = skill * 10
+
+
         let game_mode = body.Game_Mode
         let mode_Icon = ""
 
@@ -301,6 +304,7 @@ Kills: ${body.Total_Kills}
 XP: ${body.Total_XP}
 Damage: ${body.Total_Damage}
 Casualties: ${body.Total_Casualties}
+Skill: ${skill_raw} (${skill}%)
 ## ---- Players ----
 ${Players}
 ## ---- Bossfights ----
