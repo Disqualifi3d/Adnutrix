@@ -169,6 +169,7 @@ Bot.on("interactionCreate", async interaction => {
     if (interaction.commandName === "unban") {
         let file = await getFile(interaction.commandName)
         let args = {
+            reason: interaction.options.getString("reason"),
             game: interaction.options.getString("game"),
             username: interaction.options.getString("username"),
             id: interaction.options.getNumber("id")

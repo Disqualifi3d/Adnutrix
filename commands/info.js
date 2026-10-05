@@ -23,12 +23,13 @@ module.exports.run = async (interaction, client, args) => {
     }
         
 
-    let profile = await noblox.getPlayerInfo(id)
+    let profile = await noblox.getUserInfo(id)
             .catch((err) => {interaction.reply(`Promise rejected. Couldn't fetch ${Identification}'s information due to an error (${err})`); return})
 
     
 
     if (!profile) return
+    let age = Math.round(Math.abs((Date.now() - new Date(profile.created).getTime()) / (24 * 60 * 60 * 1000)))
     let thumbnail = await noblox.getPlayerThumbnail(id, 720, "png", false, "Body")
 
     let groups = await noblox.getGroups(id)
@@ -60,15 +61,15 @@ module.exports.run = async (interaction, client, args) => {
         if (thumbnail && thumbnail[0] && thumbnail[0].imageUrl) {
             embed.setThumbnail(thumbnail[0].imageUrl)
         }
-        embed.setTitle(`${profile.displayName} (@${profile.username})`)
+        embed.setTitle(`${profile.displayName} (@${profile.name})`)
         embed.setURL(`https://www.roblox.com/users/${id}/profile`)
 
         embed.addFields(
             {name: "UserId", value: `${id}`, inline: true},
-            {name: "Age", value: `${profile.age} days old`, inline: true},
+            {name: "Age", value: `${age} days old`, inline: true},
         )
         embed.addFields(
-            {name: "--< Description >--", value: profile.blurb || "No description detected."},
+            {name: "--< Description >--", value: profile.description || "No description detected."},
             {name: "--< Groups >--", value: `${gs} ${tempText}`}
         )
 

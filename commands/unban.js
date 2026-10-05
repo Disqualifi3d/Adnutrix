@@ -6,6 +6,41 @@ const adnutrixsettings = require("../utilities/Settings.js")
 
 require("dotenv").config();
 
+let isBanned = async (universeid, identifier) => {
+    let api_key = process.env.adnutrix_api_key
+
+    return await axios.get(
+        `https://apis.roblox.com/cloud/v2/universes/${universeid}/user-restrictions/${identifier}`,
+        {
+            headers: {
+                "x-api-key": api_key,
+            },
+        }
+    ).then((result) => {
+        let restriction = result.data.gameJoinRestriction
+
+        if (!restriction?.active) {
+            return false
+        }
+
+        if (restriction.duration && restriction.startTime) {
+            let endTime = Date.parse(restriction.startTime) + parseFloat(restriction.duration) * 1000
+
+            if (endTime <= Date.now()) {
+                return false
+            }
+        }
+
+        return true
+    }).catch((err) => {
+        if (err.response?.status === 404) {
+            return false
+        } else {
+            throw err
+        }
+    })
+}
+
 let unban = async (interaction, universeid, identifier) => {
     let api_key = process.env.adnutrix_api_key
 
@@ -41,6 +76,13 @@ let unban = async (interaction, universeid, identifier) => {
 
 module.exports.run = async (interaction, Bot, args) => {
 
+    let reason = args.reason && args.reason.trim()
+
+    if (!reason) {
+        await interaction.reply("Please provide a reason for the unban.")
+        return
+    }
+
     let serverId = adnutrixsettings.guild
     let channelId = adnutrixsettings.channels.modlogs
     let sv = Bot.guilds.cache.get(serverId)
@@ -57,7 +99,7 @@ module.exports.run = async (interaction, Bot, args) => {
         return
     }
 
-    let profile = await noblox.getPlayerInfo(id).catch(
+    let profile = await noblox.getUserInfo(id).catch(
         () => {
             return null
         }
@@ -76,6 +118,25 @@ module.exports.run = async (interaction, Bot, args) => {
         return
     }
 
+    let banned = await isBanned(universeid, identifier).catch(async (err) => {
+        if (err.response?.status === 429) {
+            await interaction.editReply("The Roblox API is currently rate limited. Please try again later within 10 - 30 seconds.")
+        } else {
+            await interaction.editReply(`An error occurred while checking whether this user is banned from the ${args.game} game. Error: ${err.message}`)
+        }
+
+        return null
+    })
+
+    if (banned === null) {
+        return
+    }
+
+    if (banned === false) {
+        await interaction.editReply(`**${identifier}** is not currently banned from the ${args.game} game.`)
+        return
+    }
+
     let unbanResult = await unban(
         interaction,
         universeid,
@@ -89,7 +150,7 @@ module.exports.run = async (interaction, Bot, args) => {
         return
     }
 
-    await interaction.editReply(`<@${interaction.member.id}> has unbanned **${identifier}** from the ${args.game} game.`)
+    await interaction.editReply(`<@${interaction.member.id}> has unbanned **${identifier}** from the ${args.game} game. \n\n reason: ${reason}`)
 
     if (!channel) {
         console.log("Couldn't send the unban log")
@@ -114,7 +175,7 @@ module.exports.run = async (interaction, Bot, args) => {
 
     embed.setTitle("Player Unbanned");
     embed.setDescription(
-        `[${id} - ${profile.username}](https://www.roblox.com/users/${id}/profile) has been unbanned from the game. \n\n **Version:** ${args.game} game \n **Moderator responsible:** <@${interaction.member.id}>`
+        `[${id} - ${profile.name}](https://www.roblox.com/users/${id}/profile) has been unbanned from the game. \n\n **Reason:** ${reason} \n **Version:** ${args.game} game \n **Moderator responsible:** <@${interaction.member.id}>`
     );
     embed.setTimestamp()
 

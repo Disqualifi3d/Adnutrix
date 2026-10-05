@@ -76,7 +76,7 @@ module.exports.run = async (interaction, Bot, args) => {
         return
     }
 
-    let profile = await noblox.getPlayerInfo(id).catch(
+    let profile = await noblox.getUserInfo(id).catch(
         (err) => {
             interaction.reply(`Promise rejected. Couldn't fetch ${id}'s information due to an error (${err})`); 
             return
@@ -158,7 +158,7 @@ module.exports.run = async (interaction, Bot, args) => {
     embed.setThumbnail(thumbnail)
     embed.setTitle("Player Banned");
     embed.setDescription(
-        `[${id} - ${profile.username}](https://www.roblox.com/users/${id}/profile) has been banned from the game. \n\n **Reason:** ${reasons.private} \n **Version:** ${args.game} game \n **Duration:** ${(duration > 0 && formattedDuration) || "Permanent"} \n **Moderator responsible:** <@${interaction.member.id}>`
+        `[${id} - ${profile.name}](https://www.roblox.com/users/${id}/profile) has been banned from the game. \n\n **Reason:** ${reasons.private} \n **Version:** ${args.game} game \n **Duration:** ${(duration > 0 && formattedDuration) || "Permanent"} \n **Moderator responsible:** <@${interaction.member.id}>`
     );
     embed.setTimestamp()
 

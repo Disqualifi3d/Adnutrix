@@ -19,7 +19,7 @@ module.exports.fetch = async(args) => {
     }
 
     if (!id && args.id) {
-        let inf = await noblox.getPlayerInfo(args.id).catch(
+        let inf = await noblox.getUserInfo(args.id).catch(
             () => {
                 console.log("invalid id")
                 return null

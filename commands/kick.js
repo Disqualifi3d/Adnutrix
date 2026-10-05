@@ -19,7 +19,7 @@ module.exports.run = async (interaction, client, args) => {
         return
     }
 
-    let profile = await noblox.getPlayerInfo(id).catch(
+    let profile = await noblox.getUserInfo(id).catch(
         (err) => {
             interaction.reply(`Promise rejected. Couldn't fetch ${id}'s information due to an error (${err})`); 
             return
@@ -31,7 +31,7 @@ module.exports.run = async (interaction, client, args) => {
         return
     }
 
-    let identifier = profile.username
+    let identifier = profile.name
     let reason = args.reason
 
     let api_key = process.env.adnutrix_api_key

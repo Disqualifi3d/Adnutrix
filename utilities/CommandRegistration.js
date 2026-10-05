@@ -104,6 +104,13 @@ const commands = [
         description: "Unban a user from the game (choose one external option)",
         options: [
             {
+                name: "reason",
+                description: "The reason for the unban (will be visible in the modlogs channel)",
+                type: ApplicationCommandOptionType.String,
+                required: true,
+                max_length: 1000
+            },
+            {
                 name: "game",
                 description: "The game you want to unban the user from",
                 type: ApplicationCommandOptionType.String,
